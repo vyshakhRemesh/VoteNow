@@ -1,0 +1,10 @@
+/* styles/styles.css */
+
+body {
+  background-color: #121212;
+  font-family: "Roboto", sans-serif;
+}
+
+.text-muted {
+  color: #b0b0b0 !important;
+}

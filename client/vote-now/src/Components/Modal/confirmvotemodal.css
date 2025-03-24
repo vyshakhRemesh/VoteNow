@@ -1,0 +1,14 @@
+/* styles.css */
+.custom-modal-header {
+  background-color: #3d4046; /* Example primary color */
+  color: rgb(228, 10, 10);
+}
+
+.custom-modal-body {
+  background-color: #f8f9fa;
+  color: rgb(228, 10, 10);
+}
+
+.custom-modal-footer {
+  background-color: #f8f9fa;
+}

@@ -1,0 +1,35 @@
+/* styles/dashboard.css */
+
+body {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+h2 {
+  color: #ffffff;
+}
+
+.custom-card {
+  background: rgba(40, 40, 40, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 3rem; /* Increased padding for bigger cards */
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  cursor: pointer;
+  text-align: center;
+  min-height: 160px;
+}
+
+.custom-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+  background: rgba(60, 60, 60, 0.95); /* Lighter on hover */
+  border-color: rgba(0, 150, 255, 0.3);
+}
+
+.custom-card h5 {
+  color: #e0e0e0;
+  font-size: 1.4rem;
+  margin: 0;
+}

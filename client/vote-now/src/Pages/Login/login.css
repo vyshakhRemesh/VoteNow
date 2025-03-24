@@ -1,0 +1,49 @@
+/* styles/login.css */
+
+body {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+.formcontainer {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-form {
+  background: rgba(40, 40, 40, 0.95);
+  padding: 3rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  width: 100%;
+  max-width: 400px;
+}
+
+.login-form .form-label {
+  color: #e0e0e0;
+}
+
+.login-form .form-control {
+  background: rgba(20, 20, 20, 0.9);
+  color: #e0e0e0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.login-form .form-control:focus {
+  background: rgba(20, 20, 20, 0.9);
+  border-color: rgba(0, 150, 255, 0.6);
+  box-shadow: none;
+  color: #fff;
+}
+
+.login-form button {
+  width: 100%;
+}
+
+.toast-container .toast {
+  background: rgba(30, 30, 30, 0.9);
+  color: #fff;
+}

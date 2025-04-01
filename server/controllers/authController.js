@@ -34,15 +34,55 @@
 
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer"); // Import nodemailer for sending emails
+const crypto = require("crypto"); // Import crypto for generating OTP
+
+let otps = {}; // Temporary storage for OTPs
+
+// Function to send OTP to user's email
+const sendOtp = async (email) => {
+  const otp = crypto.randomInt(100000, 999999).toString(); // Generate a 6-digit OTP
+  otps[email] = otp; // Store OTP temporarily
+  const transporter = nodemailer.createTransport({
+    service: "Gmail",
+    auth: {
+      user: process.env.EMAIL_USER, // Your email
+      pass: process.env.EMAIL_PASS, // Your email password
+    },
+  });
+
+  const mailOptions = {
+    from: process.env.EMAIL_USER,
+    to: email,
+    subject: "Your OTP Code",
+    text: `Your OTP code is ${otp}`,
+  };
+
+  await transporter.sendMail(mailOptions); // Send the email
+};
+
+// Function to verify OTP
+const verifyOtp = (email, otp) => {
+  return otps[email] === otp; // Check if the OTP matches
+};
 
 const loginUser = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, otp } = req.body;
 
   try {
     const user = await User.findOne({ email });
 
     if (!user || user.password !== password) {
       return res.status(400).json({ message: "Invalid Credentials" });
+    }
+
+    if (!otp) {
+      await sendOtp(email); // Send OTP if not provided
+      return res.status(200).json({ message: "OTP sent to your email" });
+    }
+
+    if (!verifyOtp(email, otp)) {
+      return res.status(400).json({ message: "Invalid OTP" });
     }
 
     // Don't send password back to frontend!
@@ -69,6 +109,9 @@ const loginUser = async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 };
+
+
+// Removed duplicate declaration of loginUser
 
 module.exports = { loginUser };
 

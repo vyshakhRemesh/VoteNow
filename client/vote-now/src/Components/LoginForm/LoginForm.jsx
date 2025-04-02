@@ -1,116 +1,76 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "../../api/axios"; // adjust the path based on location
+import React, { useState } from 'react';
+import axios from 'axios';
 
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Toast from "react-bootstrap/Toast";
-import ToastContainer from "react-bootstrap/ToastContainer";
-
-import "../../Pages/Login/login.css";
-
-import { useStudent } from "../../context/StudentContext";
-
-function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [toast, setToast] = useState({ show: false, message: "", variant: "" });
-  const navigate = useNavigate();
-
-  const { setStudent } = useStudent(); // <-- from context
+const LoginForm = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [otp, setOtp] = useState('');
+  const [message, setMessage] = useState('');
+  const baseUrl = 'http://localhost:5173/api/auth';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/auth/login", {
-        email,
-        password,
-      });
-      localStorage.setItem("token", res.data.token);
-      console.log("the response data is 1 ", res.data);
-      if (res.data.success) {
-        console.log("the response data is 2", res.data);
+      // First, send the login request
+      const response = await axios.post(`${baseUrl}/login`, { email, password, otp });
+      setMessage(response.data.message);
+    } catch (error) {
+      setMessage(error.response.data.message);
+    }
+  };
 
-        setStudent(res.data.student); // <-- set to context here
-        navigate("/dashboard");
-      }
+  const handleOtpRequest = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post(`${baseUrl}/login/otp`, { email });
+      setMessage('OTP sent to your email');
+    } catch (error) {
+      setMessage(error.response.data.message);
+    }
+  };
 
-      setToast({
-        show: true,
-        message: "Login Successful!",
-        variant: "success",
-      });
-      // navigate("/dashboard");
-    } catch (err) {
-      setToast({
-        show: true,
-        message: "Invalid Credentials!",
-        variant: "danger",
-      });
+  const handleOtpVerify = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(`${baseUrl}/login/verify`, { email, otp });
+      setMessage(response.data.message);
+    } catch (error) {
+      setMessage(error.response.data.message);
     }
   };
 
   return (
-    <>
-      <Form
-        onSubmit={handleSubmit}
-        className="login-form"
-        style={{
-          width: "20%",
-          margin: "100px auto",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Enter email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </Form.Group>
-
-        <Button
-          variant="primary"
-          type="submit"
-          style={{ width: "50%", alignSelf: "center" }}
-        >
-          Login
-        </Button>
-      </Form>
-
-      <ToastContainer position="top-end" className="p-3">
-        <Toast
-          bg={toast.variant}
-          onClose={() => setToast({ ...toast, show: false })}
-          show={toast.show}
-          delay={3000}
-          autohide
-        >
-          <Toast.Header closeButton>
-            <strong className="me-auto">
-              {toast.variant === "success" ? "Success" : "Error"}
-            </strong>
-          </Toast.Header>
-          <Toast.Body className="text-white">{toast.message}</Toast.Body>
-        </Toast>
-      </ToastContainer>
-    </>
+    <form onSubmit={handleSubmit}>
+      <input
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        required
+      />
+      <button type="button" onClick={handleOtpRequest}>
+        Send OTP
+      </button>
+      <input
+        type="text"
+        placeholder="Enter OTP"
+        value={otp}
+        onChange={(e) => setOtp(e.target.value)}
+      />
+      <button type="button" onClick={handleOtpVerify}>
+        Verify OTP
+      </button>
+      <button type="submit">Login</button>
+      {message && <p>{message}</p>}
+    </form>
   );
-}
+};
 
-export default Login;
+export default LoginForm;

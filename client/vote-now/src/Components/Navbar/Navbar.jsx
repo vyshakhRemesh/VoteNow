@@ -10,7 +10,7 @@ import { useStudent } from "../../context/StudentContext";
 function ColorSchemesExample() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { setStudent } = useStudent();
+  const { student, setStudent } = useStudent();
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -36,42 +36,67 @@ function ColorSchemesExample() {
             <Nav className="nav-links">
               <Nav.Link
                 as={Link}
-                to="/dashboard"
-                className={location.pathname === "/dashboard" ? "active" : ""}
+                to={`/${student?.role}-dashboard`}
+                className={
+                  location.pathname === `/${student?.role}-dashboard`
+                    ? "active"
+                    : ""
+                }
               >
                 Dashboard
               </Nav.Link>
-              <Nav.Link
-                as={Link}
-                to="/vote/Chairman"
-                className={
-                  location.pathname.startsWith("/vote") ? "active" : ""
-                }
-                disabled
-              >
-                Vote
-              </Nav.Link>
-              <Nav.Link
-                as={Link}
-                to="/result"
-                className={
-                  location.pathname.startsWith("/result") ? "active" : ""
-                }
-              >
-                Result
-              </Nav.Link>
+
+              {student?.role === "student" && (
+                <Nav.Link
+                  as={Link}
+                  to="/vote/Chairman"
+                  disabled
+                  className={
+                    location.pathname.startsWith("/vote") ? "active" : ""
+                  }
+                >
+                  Vote
+                </Nav.Link>
+              )}
+
+              {/* Show Candidates tab only for Admin */}
+              {student?.role === "admin" && (
+                <Nav.Link
+                  as={Link}
+                  to="/admin/candidates"
+                  className={
+                    location.pathname.startsWith("/admin/candidates")
+                      ? "active"
+                      : ""
+                  }
+                >
+                  Candidates
+                </Nav.Link>
+              )}
+              {student?.role === "admin" && (
+                <Nav.Link
+                  as={Link}
+                  to="/result"
+                  className={
+                    location.pathname.startsWith("/result") ? "active" : ""
+                  }
+                >
+                  Result
+                </Nav.Link>
+              )}
 
               <Nav.Link
                 as={Link}
-                to="notification"
+                to="/notification"
+                disabled
                 className={
                   location.pathname.startsWith("/notification") ? "active" : ""
                 }
-                disabled
               >
                 Notifications
               </Nav.Link>
             </Nav>
+
             <Button
               variant="outline-light"
               onClick={handleLogout}

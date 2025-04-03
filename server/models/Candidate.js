@@ -17,6 +17,10 @@ const candidateSchema = new mongoose.Schema({
       "Technical Lead",
     ],
   },
+  description: {
+    type: String, // Add this field
+    required: true, // Optional, can remove if not required
+  },
   votes: {
     type: Number,
     default: 0,

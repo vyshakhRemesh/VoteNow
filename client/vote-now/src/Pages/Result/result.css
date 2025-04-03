@@ -1,84 +1,118 @@
-/* ResultsPage.css */
-
+/* General Styles */
 .results-container {
-  font-family: Arial, sans-serif;
-  background-color: #121212; /* Dark background */
-  color: #e0e0e0; /* Light text color */
-  padding: 20px;
+  padding: 30px;
+  color: #e0e0e0;
+  max-width: 900px;
+  margin: auto;
 }
 
-h1 {
-  font-size: 2.5rem;
+/* Title */
+.title {
   text-align: center;
-  margin-bottom: 20px;
-  color: #fff; /* White color for the heading */
-  text-transform: uppercase;
-}
-
-.category {
-  background-color: #1e1e1e; /* Darker background for each category */
-  border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Slightly stronger shadow */
-}
-
-.category h2 {
-  font-size: 1.8rem;
-  color: #ddd; /* Light gray color for category headings */
-  margin-bottom: 15px;
-}
-
-.candidate-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.candidate-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 0;
-  border-bottom: 1px solid #333; /* Darker border for separation */
-  color: #e0e0e0; /* Light color for candidate name and vote count */
-}
-
-.candidate-item:last-child {
-  border-bottom: none;
-}
-
-.candidate-name {
-  font-size: 1.2rem;
-}
-
-.votes-count {
+  font-size: 2rem;
+  margin-bottom: 30px;
   font-weight: bold;
-  color: #4caf50; /* Green color for votes count */
-  width: 20%;
+}
+
+/* Tabs */
+.tabs-container {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
-.vote-bar-container {
-  width: 60%; /* Space for the vote bar */
-  height: 12px;
-  background-color: #333; /* Dark background for the vote bar */
-  border-radius: 6px;
-  overflow: hidden;
+.tab-button {
+  background-color: #222;
+  color: #ddd;
+  border: none;
+  padding: 12px 20px;
+  margin: 0 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
 }
 
-.vote-bar {
-  height: 100%;
-  background-color: transparent; /* Default to transparent */
+.tab-button.active {
+  background-color: #00c49f;
+  color: #000;
+  transform: scale(1.05);
 }
 
-.vote-bar.green {
-  background-color: #4caf50; /* Green color for the vote bar */
+/* Category Section */
+.category-section {
+  background: rgba(40, 40, 40, 0.95);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  transition: all 0.3s ease-in-out;
 }
 
-.loading {
+.category-section:hover {
+  transform: scale(1.02);
+}
+
+.category-title {
   text-align: center;
   font-size: 1.5rem;
-  color: #bbb; /* Lighter gray for loading text */
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+/* Leading Candidate Badge */
+.leading-badge {
+  background-color: #ffd700;
+  color: #000;
+  text-align: center;
+  font-weight: bold;
+  padding: 8px 12px;
+  border-radius: 8px;
+  display: inline-block;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 8px rgba(255, 215, 0, 0.5);
+}
+
+/* Chart Wrapper */
+.chart-wrapper {
+  margin-top: 10px;
+}
+
+/* Table View */
+.table-container {
+  background: rgba(40, 40, 40, 0.95);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+.result-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #e0e0e0;
+}
+
+.result-table th,
+.result-table td {
+  padding: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: left;
+}
+
+.result-table th {
+  background-color: #00c49f;
+  color: #000;
+  font-weight: bold;
+}
+
+.result-table tr:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Highlight the leading candidate's row */
+.leading-row {
+  background-color: #ffd700 !important;
+  color: #000 !important;
+  font-weight: bold;
 }

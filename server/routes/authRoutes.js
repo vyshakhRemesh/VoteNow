@@ -1,8 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const { loginUser } = require("../controllers/authController");
+const {
+  loginUser,
+  verifyOtp,
+  sendOtp,
+} = require("../controllers/authController");
 
 router.post("/login", loginUser);
+
 router.post("/login/otp", async (req, res) => {
   const { email } = req.body;
   await sendOtp(email);
@@ -18,6 +23,5 @@ router.post("/login/verify", async (req, res) => {
     res.status(400).json({ message: "Invalid OTP" });
   }
 });
-
 
 module.exports = router;

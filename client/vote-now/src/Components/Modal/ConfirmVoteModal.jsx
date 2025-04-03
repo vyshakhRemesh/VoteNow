@@ -5,6 +5,7 @@ export default function ConfirmVoteModal({
   show,
   candidate,
   category,
+  description,
   onConfirm,
   onClose,
 }) {
@@ -14,8 +15,16 @@ export default function ConfirmVoteModal({
         <Modal.Title>Confirm your Vote</Modal.Title>
       </Modal.Header>
       <Modal.Body className="custom-modal-body">
-        Are you sure you want to vote for <strong>{candidate}</strong> as{" "}
-        <strong>{category}</strong>?
+        <p>
+          Are you sure you want to vote for <strong>{candidate}</strong> as{" "}
+          <strong>{category}</strong>?
+        </p>
+        {description && (
+          <div className="candidate-description">
+            <strong>About {candidate}:</strong>
+            <p>{description}</p>
+          </div>
+        )}
       </Modal.Body>
       <Modal.Footer className="custom-modal-footer">
         <Button variant="outline-secondary" onClick={onClose}>

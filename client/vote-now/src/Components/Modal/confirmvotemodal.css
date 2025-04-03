@@ -12,3 +12,10 @@
 .custom-modal-footer {
   background-color: #f8f9fa;
 }
+.candidate-description {
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+  font-size: 14px;
+}
